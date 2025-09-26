@@ -1,0 +1,15 @@
+ __pycache__/
+ *.pyc
+output.srt
+whisper_live/__pycache__/__init__.cpython-311.pyc
+whisper_live/__pycache__/__init__.cpython-313.pyc
+whisper_live/__pycache__/client.cpython-311.pyc
+whisper_live/__pycache__/client.cpython-313.pyc
+whisper_live/__pycache__/server.cpython-311.pyc
+whisper_live/__pycache__/utils.cpython-311.pyc
+whisper_live/__pycache__/vad.cpython-311.pyc
+whisper_live/backend/__pycache__/__init__.cpython-311.pyc
+whisper_live/backend/__pycache__/base.cpython-311.pyc
+whisper_live/backend/__pycache__/faster_whisper_backend.cpython-311.pyc
+whisper_live/transcriber/__pycache__/__init__.cpython-311.pyc
+whisper_live/transcriber/__pycache__/transcriber_faster_whisper.cpython-311.pyc

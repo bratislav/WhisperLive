@@ -139,6 +139,25 @@ class Client:
         elif status == "WARNING":
             print(f"Message from Server: {message_data['message']}")
 
+    def detect_command(self, text):
+        command = "NO_COMMAND"
+        if "počni snimanje" in text or "snimaj" in text:
+            command = "START_RECORDING"
+        if "zaustavi snimanje" in text or "stopiraj snimanje" in text or "stopiraj" in text:
+            command = "STOP_RECORDING"
+        # for t in text:
+        #     if "snimaj" in t.lower():
+        #         command = "START_RECORDING"
+        #         break
+        #     if "stopiraj" in t.lower():
+        #         command = "STOP_RECORDING"
+        #         break
+        return command
+    
+    def process_command(self, command):
+        print(f"Processing {command}...")
+        print(f"Processing {command} done!")
+
     def process_segments(self, segments, translated=False):
         """Processes transcript segments."""
         text = []
@@ -182,7 +201,35 @@ class Client:
                 original_text.append(self.last_segment["text"])
             
             utils.clear_screen()
+            #utils.print_transcript(original_text)
+            
+            # ver1:
+            # command = self.detect_command(original_text)
+            # if command != "NO_COMMAND":
+            #     print(f"Detected command: {command}")
+            #     utils.print_transcript(command)
+            #     self.process_command(command)
+            #     #utils.print_transcript(f"command {text}")
+            # else:
+            #     utils.print_transcript(text)
+            #
+
+            # ver2:
+            # command = self.detect_command(original_text)
+            # utils.print_transcript(original_text)
+            # if command != "NO_COMMAND":
+            #     self.process_command(command)
+            #
+
+            # ver3: proveriti: da li komanda moze da se izvrsi vise puta? ako da, ovo treba spreciti nekako!
+            # ajde za pocni snimanje i zaustavi nije problem, posto mogu biti dempotentne, ali za pozivanje LLM-a
+            # ponavljanje ne sme da se desi!
+            command = self.detect_command(self.last_segment["text"].lower())
             utils.print_transcript(original_text)
+            if command != "NO_COMMAND":
+                self.process_command(command)
+            #
+
             if self.enable_translation:
                 print(f"\n\nTRANSLATION to {self.target_language}:")
                 utils.print_transcript([seg["text"] for seg in self.translated_transcript[-4:]], translated=True)
